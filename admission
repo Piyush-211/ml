@@ -64,7 +64,16 @@ plt.show()
 print(f" Accuracy is {accuracy_score(y_test,y_pred_lr)}")
 print(classification_report(y_test,y_pred_lr))
 
+ConfusionMatrixDisplay.from_predictions(y_test,y_pred_rf,xticks_rotation='vertical')
+plt.title('Random Forest')
+plt.show()
+print(f" Accuracy is {accuracy_score(y_test,y_pred_rf)}")
+print(classification_report(y_test,y_pred_rf))
 
+from sklearn.tree import plot_tree
+plt.figure(figsize=(10,5))
+plot_tree(model_dt,filled=True, feature_names=x.columns, class_names=['0','1'], rounded=True)
+plt.show()
 
 
 
