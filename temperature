@@ -1,0 +1,69 @@
+import numpy as np
+import pandas as pd
+import seaborn as sns
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+df=pd.read_csv('temperatures.csv')
+df
+
+df.head()
+df.tail()
+df.shape
+df.info()
+df.describe()
+type(df)
+
+count = (df["JAN"] == 22).sum()
+print(count)
+df.isnull().sum()
+
+df.info()
+
+x=df["YEAR"]
+y=df["ANNUAL"]
+
+sns.scatterplot(x=x,y=y,data=df)
+
+x.shape
+
+x=x.values
+x=x.reshape(117,1)
+x.shape
+type(x)
+
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.25)
+print("x_train shape :",x_train.shape)
+print("y_train shape :",y_train.shape)
+print("x_test shape :",x_test.shape)
+print("y_test shape :",y_test.shape)
+
+model=LinearRegression()
+
+model.fit(x_train,y_train)
+
+model.coef_ #m (slope)
+
+model.intercept_  #c(intercept)
+
+y_pred=model.predict(x_test)
+y_pred.shape
+
+plt.scatter(x_train,y_train,color="blue")
+plt.plot(x_test,y_pred,color="red",linewidth=3)
+plt.title("Temprature vs Year")
+plt.xlabel("Year")
+plt.ylabel("Temprature")
+plt.show()
+
+sns.regplot(data=df,x=x_train,y=y_train)
+
+from sklearn.metrics import mean_absolute_error,measn_squared_error,r2_score
+
+mse=mean_squared_error(y_test,y_pred)
+mae=mean_absolute_error(y_test,y_pred)
+r2=r2_score(y_test,y_pred)
+
+print("MSE :",)
